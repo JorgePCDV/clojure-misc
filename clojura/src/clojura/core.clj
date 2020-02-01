@@ -5,4 +5,4 @@
 (defn -main [& args]
   (println "hello clojura")
   (println (factorial 5))
-  (println (factorial-big-int 21)))
+  (println (factorial-bigint 21)))

@@ -8,4 +8,8 @@
 
 (deftest factorial-big-int-test
   (testing "21 factorial"
-    (is (= 2432902008176640000 (factorial-big-int 21)))))
+    (is (= 51090942171709440000N (factorial-bigint 21)))))
+
+(deftest factorial-bigint-loop-test
+  (testing "21 factorial big int loop"
+    (is (= 51090942171709440000N (factorial-bigint-loop 21)))))
