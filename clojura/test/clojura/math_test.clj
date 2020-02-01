@@ -1,6 +1,6 @@
-(ns hello-clojure.math-test
+(ns clojura.math-test
   (:require [clojure.test :refer :all])
-  (:require [hello-clojure.math :refer [factorial]]))
+  (:require [clojura.math :refer [factorial]]))
 
 (deftest factorial-test
   (testing "5 factorial"

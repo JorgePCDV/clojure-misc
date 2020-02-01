@@ -1,6 +1,6 @@
-(ns hello_clojure.core
+(ns clojura.core
   (:gen-class)
-  (:require [hello-clojure.math :refer [factorial]]))
+  (:require [clojura.math :refer [factorial]]))
 
 (defn -main [& args]
   (println (factorial 5))

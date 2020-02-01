@@ -1,4 +1,4 @@
-(ns hello-clojure.math)
+(ns clojura.math)
 
 (defn factorial [n]
   (if (= n 1) 1
