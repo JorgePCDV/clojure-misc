@@ -17,5 +17,20 @@
       (= guesses ["s" "p"]) 1
       (= guesses ["p" "s"]) 2)))
 
+(defn play-hand []
+  (let [computer-guess (rand-nth ["r" "p" "s"])
+        player-guess (get-guess)
+        winner (winner computer-guess player-guess)]
+    (println "Computer guessed: " computer-guess)
+    (println "Player guessed: " player-guess)
+    (cond
+      (= player-guess nil) (println "Invalid input")
+      (= winner 0) (println "Tied game")
+      (= winner 1) (println "Computer won")
+      (= winner 2) (println "Player won")
+      )))
+
 (defn -main [& args]
-  (println (get-guess)))
+  (loop []
+    (play-hand)
+    (recur)))
