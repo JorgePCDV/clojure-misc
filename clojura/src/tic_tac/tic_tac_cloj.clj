@@ -16,6 +16,8 @@
     (list
         (take-nth 3 board)
         (take-nth 3 (drop 1 board))
-        (take-nth 3 (drop 2 board)))))
+        (take-nth 3 (drop 2 board))
+        (take-nth 4 board)
+        (take-nth 2 (drop-last 2 (drop 2 board))))))
 
 (defn -main [& args])
