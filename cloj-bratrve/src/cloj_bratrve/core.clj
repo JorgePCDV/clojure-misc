@@ -12,6 +12,11 @@
   ([family-name]
     (multi-arity-example "Default First Name" family-name)))
 
+(defn destructuring [[first-choice second-choice & rest-choices]]
+  (println (str "First choice is: " first-choice))
+  (println (str "Second choice is: " second-choice))
+  (println (str "Other choices are: " (clojure.string/join ", " rest-choices))))
+
 (defn rest-param
   [name & things]
   (str name "'s things: " (clojure.string/join ", " things)))
