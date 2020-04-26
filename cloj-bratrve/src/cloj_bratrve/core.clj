@@ -33,6 +33,12 @@
          "mild error"
          "alert")))
 
+(defn destructure-maps
+  [{:keys [lat lng] :as location-map}]
+  (println (str "Original map: " location-map))
+  (println (str "Latitude provided: " lat))
+  (println (str "Longitude provided: " lng)))
+
 (defn -main [& args]
   (foo "clojure"))
 
