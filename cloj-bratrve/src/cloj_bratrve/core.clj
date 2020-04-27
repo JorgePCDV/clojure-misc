@@ -33,6 +33,14 @@
          "mild error"
          "alert")))
 
+(def anon-functions #(* % 3))
+
+(defn incrementor
+  "Creates a custom incrementor"
+  [inc-by]
+  #(+ % inc-by))
+(def inc3 (incrementor 3))
+
 (defn destructure-maps
   [{:keys [lat lng] :as location-map}]
   (println (str "Original map: " location-map))
