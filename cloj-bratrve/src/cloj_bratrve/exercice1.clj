@@ -22,13 +22,19 @@
 
 (defn matching-part
   [part]
-  {:name (clojure.string/replace (:name part) #"^left-" "right")
+  {:name (clojure.string/replace (:name part) #"^left-" "right-")
    :size (:size part)})
 
 (defn symmetrize-parts
   "Expects a seq of maps that have a :name and :size"
   [asymmetric-parts]
-  )
+  (loop [remaining-asym-parts asymmetric-parts
+         final-parts []]
+    (if (empty? remaining-asym-parts)
+      final-parts
+      (let [[part & remaining] remaining-asym-parts]
+        (recur remaining
+               (into final-parts (set [part (matching-part part)])))))))
 
 (defn -main [& args]
-  (println asym-parts))
+  (println (symmetrize-parts asym-parts)))
