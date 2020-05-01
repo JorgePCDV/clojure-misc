@@ -36,5 +36,13 @@
         (recur remaining
                (into final-parts (set [part (matching-part part)])))))))
 
+(defn better-symmetrize-parts
+  "Expects a seq of maps that have a :name and :size"
+  [asym-parts]
+  (reduce (fn [final-parts part]
+            (into final-parts (set [part (matching-part part)])))
+          []
+          asym-parts))
+
 (defn -main [& args]
-  (println (symmetrize-parts asym-parts)))
+  (println (better-symmetrize-parts asym-parts)))
