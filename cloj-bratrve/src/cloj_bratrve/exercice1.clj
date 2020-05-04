@@ -44,5 +44,16 @@
           []
           asym-parts))
 
+(defn hit
+  [asym-parts]
+  (let [sym-parts (better-symmetrize-parts asym-parts)
+        part-size-sum (reduce + (map :size sym-parts))
+        target (rand part-size-sum)]
+    (loop [[part & remaining] sym-parts
+           accumulated-size (:size part)]
+      (if (> accumulated-size target)
+        part
+        (recur remaining (+ accumulated-size (:size (first remaining))))))))
+
 (defn -main [& args]
-  (println (better-symmetrize-parts asym-parts)))
+  (println (hit asym-parts)))
