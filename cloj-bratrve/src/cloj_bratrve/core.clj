@@ -47,6 +47,10 @@
   (println (str "Latitude provided: " lat))
   (println (str "Longitude provided: " lng)))
 
+(defn append-function
+  [arg]
+  (str arg " appended"))
+
 (defn -main [& args]
   (foo "clojure"))
 
