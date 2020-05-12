@@ -47,6 +47,12 @@
   (println (str "Latitude provided: " lat))
   (println (str "Longitude provided: " lng)))
 
+(def sum #(reduce + %))
+(def avg #(/ (sum %) (count %)))
+(defn stats
+  [numbers]
+  (map #(% numbers) [sum count avg]))
+
 (defn append-function
   [arg]
   (str arg " appended"))
