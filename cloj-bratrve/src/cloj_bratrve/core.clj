@@ -73,6 +73,7 @@
   [arg]
   (str arg " appended"))
 
+(concat [1 2] '(3 4))
+
 (defn -main [& args]
   (foo "clojure"))
-
