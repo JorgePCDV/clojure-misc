@@ -85,5 +85,10 @@
   (into target additions))
 (my-conj [0] 1 2 3)
 
+(defn my-into
+  [target additions]
+  (apply conj target additions))
+(my-into [0] [1 2 3])
+
 (defn -main [& args]
   (foo "clojure"))
