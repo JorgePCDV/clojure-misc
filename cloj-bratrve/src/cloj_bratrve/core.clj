@@ -80,5 +80,10 @@
 
 (concat [1 2] '(3 4))
 
+(defn my-conj
+  [target & additions]
+  (into target additions))
+(my-conj [0] 1 2 3)
+
 (defn -main [& args]
   (foo "clojure"))
