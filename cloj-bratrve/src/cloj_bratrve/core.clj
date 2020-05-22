@@ -90,5 +90,15 @@
   (apply conj target additions))
 (my-into [0] [1 2 3])
 
+(defn partial-logger
+  [log-level message]
+  (condp = log-level
+    :warn (clojure.string/lower-case message)
+    :emergency (clojure.string/upper-case message)))
+(def warn (partial partial-logger :warn))
+(def emergency (partial partial-logger :emergency))
+(warn "SOME WARN MESSAGE")
+(emergency "emergency message")
+
 (defn -main [& args]
   (foo "clojure"))
