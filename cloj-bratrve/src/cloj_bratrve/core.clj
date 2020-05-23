@@ -90,6 +90,14 @@
   (apply conj target additions))
 (my-into [0] [1 2 3])
 
+(defn my-complement
+  [fun]
+  (fn [& args]
+    (not (apply fun args))))
+(def my-pos? (complement neg?))
+(my-pos? 1)
+(my-pos? -1)
+
 (defn partial-logger
   [log-level message]
   (condp = log-level
