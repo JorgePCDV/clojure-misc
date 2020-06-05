@@ -20,5 +20,15 @@
   (map #(clojure.string/split % #",")
        (clojure.string/split string #"\n")))
 
+(defn mapify
+  "Return a seq of maps like {:name \"Jorge\" :glit-index 10}"
+  [rows]
+  (map (fn [unmapped-row]
+         (reduce (fn [row-map [vamp-key value]]
+                   (assoc row-map vamp-key (convert vamp-key value)))
+                 {}
+                 (map vector vamp-keys unmapped-row)))
+       rows))
+
 (defn -main [& args]
-   (println (parse (slurp filename))))
+  (println (parse (slurp filename))))
