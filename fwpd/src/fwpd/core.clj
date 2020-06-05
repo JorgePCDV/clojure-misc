@@ -30,5 +30,9 @@
                  (map vector vamp-keys unmapped-row)))
        rows))
 
+(defn glit-filter
+  [min-glit records]
+  (filter #(>= (:glit-index %) min-glit) records))
+
 (defn -main [& args]
   (println (parse (slurp filename))))
