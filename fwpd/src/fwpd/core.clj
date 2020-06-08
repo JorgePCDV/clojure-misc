@@ -34,5 +34,9 @@
   [min-glit records]
   (filter #(>= (:glit-index %) min-glit) records))
 
+(defn glit-filter-names
+  [min-glit records]
+  (map (fn [record] (:name record)) (filter #(>= (:glit-index %) min-glit) records)))
+
 (defn -main [& args]
   (println (parse (slurp filename))))
