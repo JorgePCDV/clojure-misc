@@ -38,5 +38,13 @@
   [min-glit records]
   (map (fn [record] (:name record)) (filter #(>= (:glit-index %) min-glit) records)))
 
+(defn analysis
+  [text]
+  (str "Character count: " (count text)))
+
+(defn analyze-file
+  [filename]
+  (analysis (slurp filename)))
+
 (defn -main [& args]
   (println (parse (slurp filename))))
