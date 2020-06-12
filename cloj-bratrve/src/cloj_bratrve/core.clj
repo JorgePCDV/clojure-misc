@@ -113,7 +113,7 @@
   ([vals accumulating-total]
    (if (empty? vals)
      accumulating-total
-     (sum-recur (rest vals) (+ (first vals) accumulating-total)))))
+     (recur (rest vals) (+ (first vals) accumulating-total)))))
 
 (defn -main [& args]
   (foo "clojure"))
