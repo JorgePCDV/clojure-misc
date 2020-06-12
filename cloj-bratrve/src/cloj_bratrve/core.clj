@@ -1,5 +1,5 @@
 (ns cloj-bratrve.core
-(:gen-class))
+  (:gen-class))
 
 (defn append-exclamation
   "Appends exclamation point"
@@ -8,9 +8,9 @@
 
 (defn multi-arity-example
   ([first-name family-name]
-    (str "First: " first-name " Second: " family-name))
+   (str "First: " first-name " Second: " family-name))
   ([family-name]
-    (multi-arity-example "Default First Name" family-name)))
+   (multi-arity-example "Default First Name" family-name)))
 
 (defn destructuring [[first-choice second-choice & rest-choices]]
   (println (str "First choice is: " first-choice))
@@ -66,7 +66,7 @@
 (take-while #(< (:month %) 3) food-journal)
 (drop-while #(< (:month %) 3) food-journal)
 (take-while #(< (:month %) 4)
-  (drop-while #(< (:month %) 2) food-journal))
+            (drop-while #(< (:month %) 2) food-journal))
 (some #(and (> (:pasta %) 3) %) food-journal)
 
 (defn append-function
@@ -107,6 +107,13 @@
 (def emergency (partial partial-logger :emergency))
 (warn "SOME WARN MESSAGE")
 (emergency "emergency message")
+
+(defn sum-recur
+  ([vals] (sum-recur vals 0))
+  ([vals accumulating-total]
+   (if (empty? vals)
+     accumulating-total
+     (sum-recur (rest vals) (+ (first vals) accumulating-total)))))
 
 (defn -main [& args]
   (foo "clojure"))
