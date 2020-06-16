@@ -1,5 +1,6 @@
 (ns cloj-bratrve.core
   (:gen-class))
+(require '[clojure.string :as s])
 
 (defn append-exclamation
   "Appends exclamation point"
@@ -114,6 +115,10 @@
    (if (empty? vals)
      accumulating-total
      (recur (rest vals) (+ (first vals) accumulating-total)))))
+
+(defn clean-string
+  [text]
+  (s/replace (s/trim text) #"( dirty|dirty )" ""))
 
 (defn -main [& args]
   (foo "clojure"))
