@@ -120,5 +120,18 @@
   [text]
   (s/replace (s/trim text) #"( dirty|dirty )" ""))
 
+;comp example
+(def character
+  {:name       "Some Character"
+   :attributes {:intelligence 10
+                :strength     4
+                :dexterity    5}})
+(def c-int (comp :intelligence :attributes))
+(def c-str (comp :strength :attributes))
+(def c-dex (comp :dexterity :attributes))
+(c-int character)
+(c-str character)
+(c-dex character)
+
 (defn -main [& args]
   (foo "clojure"))
