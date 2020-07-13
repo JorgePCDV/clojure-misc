@@ -2,6 +2,14 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(defn new-board
+  [rows]
+  (let [initial-board {:rows rows}
+        max-pos (row-tri)]
+    (reduce (fn [board pos] (add-pos board max-pos pos))
+            initial-board
+            (range 1 (inc max-pos)))))
+
 (defn get-input
   "Waits for user to enter text and hit enter, then cleans input"
   ([] (get-input ""))
