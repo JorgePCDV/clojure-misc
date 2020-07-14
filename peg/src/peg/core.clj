@@ -2,6 +2,14 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(defn add-pos
+  "Pegs the position and performs connections"
+  [board max-pos pos]
+  (let [pegged-board (assoc-in board [pos :pegged] true)]
+    (reduce (fn [new-board connector] (connector new-board max-pos pos))
+            pegged-board
+            [connect-right connect-down-left connect-down-right])))
+
 (defn new-board
   [rows]
   (let [initial-board {:rows rows}
