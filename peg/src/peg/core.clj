@@ -2,6 +2,14 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(defn connect
+  "Form a mutual connection between two positions"
+  [board max-pos pos neighbor destination]
+  (if (in-bounds? max-pos neighbor destination)
+    (reduce (fn [new-board [p1 p2]] (assoc-in new-board [p1 :connections p2] neighbor))
+            board
+            [[pos destination] [destination pos]])))
+
 (defn connect-right
   [board max-pos pos]
   (let [neighbor (inc pos)
