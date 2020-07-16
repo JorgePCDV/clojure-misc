@@ -2,6 +2,11 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(defn in-bounds?
+  "Is every position less than or equal the max position?"
+  [max-pos & positions]
+  (= max-pos (apply max max-pos positions)))
+
 (defn connect
   "Form a mutual connection between two positions"
   [board max-pos pos neighbor destination]
