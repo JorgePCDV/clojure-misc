@@ -2,6 +2,12 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(defn row-num
+  "Returns row number the position belongs to: pos 1 in row 1,
+   positions 2 and 3 in row 2, etc."
+  [pos]
+  (inc (count (take-while #(> pos %) tri))))
+
 (defn in-bounds?
   "Is every position less than or equal the max position?"
   [max-pos & positions]
@@ -61,6 +67,13 @@
      (if (empty? input)
        default
        (clojure.string/lower-case input)))))
+
+(defn prompt-empty-peg
+  [board]
+  (println "Here's your board:")
+  (print-board board)
+  (println "Remove which peg? [e]")
+  (prompt-move (remove-peg board (letter->pos (get-input "e")))))
 
 (defn prompt-rows
   []
