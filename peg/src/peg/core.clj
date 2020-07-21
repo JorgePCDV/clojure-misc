@@ -87,6 +87,15 @@
        default
        (clojure.string/lower-case input)))))
 
+(defn render-row [board row-num]
+  (str (row-padding row-num (:rows board)))
+        (clojure.string/join " " (map (partial render-pos board) (row-positions row-num))))
+
+(defn print-board
+  [board]
+  (doseq [row-num (range 1 (inc (:rows board)))]
+    (println (render-row board row-num))))
+
 (defn prompt-empty-peg
   [board]
   (println "Here's your board:")
