@@ -78,6 +78,14 @@
             initial-board
             (range 1 (inc max-pos)))))
 
+;;;;
+;; Interaction
+;;;;
+(defn letter->pos
+  "Converts a letter string to the corresponding position number"
+  [letter]
+  (inc (- (int (first letter)) alpha-start)))
+
 (defn get-input
   "Waits for user to enter text and hit enter, then cleans input"
   ([] (get-input ""))
