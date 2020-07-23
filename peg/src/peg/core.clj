@@ -2,6 +2,14 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+;;;;
+;; Represent board textually and print it
+;;;
+(def alpha-start 97)
+(def alpha-end 123)
+(def letters (map (comp str char) (range alpha-start alpha-end)))
+(def pos-chars 3)
+
 (defn tri*
   "Generates lazy sequence of triangular numbers"
   ([] tri* 0 1)
