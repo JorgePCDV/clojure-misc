@@ -124,6 +124,11 @@
         (println "\n That was an invalid move!")
         (prompt-move board)))))
 
+(defn remove-peg
+  "Take the peg at given position out of the board"
+  [board pos]
+  (assoc-in board [pos :pegged] false))
+
 (defn prompt-empty-peg
   [board]
   (println "Here's your board:")
