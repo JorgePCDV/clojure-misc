@@ -112,6 +112,18 @@
   (doseq [row-num (range 1 (inc (:rows board)))]
     (println (render-row board row-num))))
 
+(defn can-move?
+  "Do any of the pegged positions have valid moves?"
+  [board]
+  (some (comp not-empty (partial valid-moves board))
+        (map first (filter #(get (second %) :pegged) board))))
+
+(defn successful-move
+  [board]
+  (if (can-move? board)
+    (prompt-move board)
+    (game-over board)))
+
 (defn prompt-move
   [board]
   (println "\nHere's your board:")
