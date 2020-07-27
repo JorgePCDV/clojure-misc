@@ -112,6 +112,30 @@
   (doseq [row-num (range 1 (inc (:rows board)))]
     (println (render-row board row-num))))
 
+;;;;
+;; Move pegs
+;;;;
+(defn pegged?
+  "Does the position have a peg in it?"
+  [board pos]
+  (get-in board [pos :pegged]))
+
+(defn valid-moves
+  "Return a map of all valid moves for pos, 
+  where the key is the destination and the value is the jumped position"
+  [board pos]
+  (into {}
+        (filter (fn [[destination jumped]]
+                  (and (not (pegged? board destination))
+                       (pegged? board jumped)))
+                (get-in board [pos :connections]))))
+
+(defn valid-move?
+  "Return jumped position if the move from p1 to p2 is valid,
+  nil otherwise"
+  [board p1 p2]
+  (get (valid-moves board p1) p2))
+
 (defn can-move?
   "Do any of the pegged positions have valid moves?"
   [board]
