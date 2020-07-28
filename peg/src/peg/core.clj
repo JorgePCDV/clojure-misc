@@ -103,6 +103,18 @@
        default
        (clojure.string/lower-case input)))))
 
+(defn row-positions
+  "Return all positions in the given row"
+  [row-num]
+  (range (inc (or (row-tri (dec row-num)) 0))
+         (inc (row-tri row-num))))
+
+(defn row-padding
+  "String of spaces to add to the beginning of a row to center it"
+  [row-num rows]
+  (let [pad-length (/ (* (- rows row-num) pos-chars) 2)]
+    (apply str (take pad-length (repeat " ")))))
+
 (defn render-row [board row-num]
   (str (row-padding row-num (:rows board)))
         (clojure.string/join " " (map (partial render-pos board) (row-positions row-num))))
