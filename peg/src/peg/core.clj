@@ -2,6 +2,8 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(declare successful-move prompt-move game-over prompt-rows)
+
 ;;;;
 ;; Represent board textually and print it
 ;;;
