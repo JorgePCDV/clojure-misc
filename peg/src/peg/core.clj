@@ -2,6 +2,60 @@
   (:require [clojure.set :as set])
   (:gen-class))
 
+(declare successful-move prompt-move game-over prompt-rows)
+
+;;;;
+;; Represent board textually and print it
+;;;
+(def alpha-start 97)
+(def alpha-end 123)
+(def letters (map (comp str char) (range alpha-start alpha-end)))
+(def pos-chars 3)
+
+(defn ansi-styles
+  {:red "[31m"
+   :green "[32m"
+   :blue "34m"
+   :reset "[0m"})
+
+(defn ansi
+  "Produce a string which will apply an ansi style"
+  [style]
+  (str \u001b (style ansi-styles)))
+
+(defn colorize
+  "Apply ansi color to text"
+  [text color]
+  (str (ansi color) text (ansi :reset)))
+
+(defn render-pos
+  [board pos]
+  (str (nth letters (dec pos))
+       (if (get-in board [pos :pegged])
+         (colorize "0" :blue)
+         (colorize "-" :red))))
+
+(defn row-positions
+  "Return all positions in the given row"
+  [row-num]
+  (range (inc (or (row-tri (dec row-num)) 0))
+         (inc (row-tri row-num))))
+
+(defn row-padding
+  "String of spaces to add to the beginning of a row to center it"
+  [row-num rows]
+  (let [pad-length (/ (* (- rows row-num) pos-chars) 2)]
+    (apply str (take pad-length (repeat " ")))))
+
+(defn render-row [board row-num]
+  (str (row-padding row-num (:rows board)))
+        (clojure.string/join " " (map (partial render-pos board) (row-positions row-num))))
+
+(defn print-board
+  [board]
+  (doseq [row-num (range 1 (inc (:rows board)))]
+    (println (render-row board row-num))))
+
 (defn tri*
   "Generates lazy sequence of triangular numbers"
   ([] tri* 0 1)
@@ -78,6 +132,14 @@
             initial-board
             (range 1 (inc max-pos)))))
 
+;;;;
+;; Interaction
+;;;;
+(defn letter->pos
+  "Converts a letter string to the corresponding position number"
+  [letter]
+  (inc (- (int (first letter)) alpha-start)))
+
 (defn get-input
   "Waits for user to enter text and hit enter, then cleans input"
   ([] (get-input ""))
@@ -87,14 +149,41 @@
        default
        (clojure.string/lower-case input)))))
 
-(defn render-row [board row-num]
-  (str (row-padding row-num (:rows board)))
-        (clojure.string/join " " (map (partial render-pos board) (row-positions row-num))))
+;;;;
+;; Move pegs
+;;;;
+(defn pegged?
+  "Does the position have a peg in it?"
+  [board pos]
+  (get-in board [pos :pegged]))
 
-(defn print-board
+(defn valid-moves
+  "Return a map of all valid moves for pos, 
+  where the key is the destination and the value is the jumped position"
+  [board pos]
+  (into {}
+        (filter (fn [[destination jumped]]
+                  (and (not (pegged? board destination))
+                       (pegged? board jumped)))
+                (get-in board [pos :connections]))))
+
+(defn valid-move?
+  "Return jumped position if the move from p1 to p2 is valid,
+  nil otherwise"
+  [board p1 p2]
+  (get (valid-moves board p1) p2))
+
+(defn can-move?
+  "Do any of the pegged positions have valid moves?"
   [board]
-  (doseq [row-num (range 1 (inc (:rows board)))]
-    (println (render-row board row-num))))
+  (some (comp not-empty (partial valid-moves board))
+        (map first (filter #(get (second %) :pegged) board))))
+
+(defn successful-move
+  [board]
+  (if (can-move? board)
+    (prompt-move board)
+    (game-over board)))
 
 (defn prompt-move
   [board]
@@ -107,6 +196,11 @@
       (do
         (println "\n That was an invalid move!")
         (prompt-move board)))))
+
+(defn remove-peg
+  "Take the peg at given position out of the board"
+  [board pos]
+  (assoc-in board [pos :pegged] false))
 
 (defn prompt-empty-peg
   [board]
