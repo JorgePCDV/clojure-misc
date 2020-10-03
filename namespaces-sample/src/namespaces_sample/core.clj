@@ -1,4 +1,4 @@
-(ns namespaces-sample.core)
+(ns namespaces-sample.core (:gen-class))
 
 (defn foo
   "I don't do a whole lot."
