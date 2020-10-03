@@ -1,9 +1,7 @@
-(ns namespaces-sample.core (:gen-class))
-
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(ns namespaces-sample.core
+  (:gen-class))
+(require 'namespaces-sample.visualization.svg)
+(refer 'namespaces-sample.visualization.svg)
 
 (defn -main
   [& args]
