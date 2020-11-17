@@ -1,7 +1,6 @@
 (ns namespaces-sample.core
+  (:require [namespaces-sample.visualization.svg :as svg])
   (:gen-class))
-(require 'namespaces-sample.visualization.svg)
-(refer 'namespaces-sample.visualization.svg)
 
 (def data [{:location    "Cologne, Germany"
             :cheese-name "Archbishop Hildebold's Cheese Pretzel"
@@ -26,5 +25,5 @@
 
 (defn -main
   [& args]
-  (println (points data)))
+  (println (svg/points data)))
 
