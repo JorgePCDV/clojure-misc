@@ -1,5 +1,6 @@
 (ns namespaces-sample.core
-  (:require [namespaces-sample.visualization.svg :as svg])
+  (:require [clojure.java.browse :as browse]
+            [namespaces-sample.visualization.svg :refer [xml]])
   (:gen-class))
 
 (def data [{:location    "Cologne, Germany"
@@ -23,7 +24,22 @@
             :lat         41.90
             :lng         12.45}])
 
+(defn url
+  [filename]
+  (str "file:///"
+       (System/getProperty "user.dir")
+       "/"
+       filename))
+
+(defn template
+  [contents]
+  (str "<style>polyline { fill:none; stroke:#5881d8; stroke-width:3}</style>"
+       contents))
+
 (defn -main
   [& args]
-  (println (svg/points data)))
-
+  (let [filename "map.html"]
+    (->> data
+         (xml 50 100)
+         template
+         (spit filename))))
