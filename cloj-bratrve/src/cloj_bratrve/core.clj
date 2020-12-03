@@ -137,5 +137,9 @@
 (c-str character)
 (c-dex character)
 
+; eval example
+(def addition-list (list + 1 2))
+(eval addition-list)
+
 (defn -main [& args]
   (foo "clojure"))
