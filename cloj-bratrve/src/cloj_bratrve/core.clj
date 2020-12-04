@@ -141,5 +141,15 @@
 (def addition-list (list + 1 2))
 (eval addition-list)
 
+; clojure reader and evaluator
+(read-string "(+ 1 2)")
+(list? (read-string "(+ 1 2)"))
+(conj (read-string "(+ 1 2)") :something)
+(eval (read-string "(+ 1 2)"))
+(read-string "#(+ 1 %)")
+(read-string "'(a b c)")
+(read-string "@var")
+(read-string "; ignore!\n(+ 1 2)")
+
 (defn -main [& args]
   (foo "clojure"))
