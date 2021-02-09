@@ -156,7 +156,15 @@
   [function-call]
   (butlast function-call))
 (ignore-last-operand (+ 1 2 10))
+(macroexpand '(ignore-last-operand (+ 1 2 10)))
 
+; infix macro
+(defmacro infix
+  [infixed]
+  (list (second infixed)
+        (first infixed)
+        (last infixed)))
+(infix (1 + 2))
 
 (defn -main [& args]
   (foo "clojure"))
