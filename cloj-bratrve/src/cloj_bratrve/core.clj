@@ -151,5 +151,12 @@
 (read-string "@var")
 (read-string "; ignore!\n(+ 1 2)")
 
+; macros
+(defmacro ignore-last-operand
+  [function-call]
+  (butlast function-call))
+(ignore-last-operand (+ 1 2 10))
+
+
 (defn -main [& args]
   (foo "clojure"))
