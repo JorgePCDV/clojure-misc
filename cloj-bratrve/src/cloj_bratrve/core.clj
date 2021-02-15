@@ -166,5 +166,13 @@
         (last infixed)))
 (infix (1 + 2))
 
+; threading macro
+(defn read-resource
+  [path]
+  (-> path
+      clojure.java.io/resource
+      slurp
+      read-string))
+
 (defn -main [& args]
   (foo "clojure"))
