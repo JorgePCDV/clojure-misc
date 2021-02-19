@@ -166,6 +166,12 @@
         (last infixed)))
 (infix (1 + 2))
 
+(defmacro print-and-return
+  [expression]
+  (list 'let ['result expression]
+        (list 'println 'result)
+        'result))
+
 ; threading macro
 (defn read-resource
   [path]
