@@ -181,13 +181,14 @@
       read-string))
 
 ; syntax quoting/unquoting example
-(defn critize-code
+(defn criticize-code
   [criticism code]
   `(println ~criticism (quote ~code)))
 (defmacro code-critic
   [bad good]
-  `(do ~(critize-code "Bad code:" bad)
-       ~(critize-code "Good code:" good)))
+  `(do ~@(map #(apply criticize-code %)
+             [["Bad code:" bad]
+              ["Good code:" good]])))
 
 (defn -main [& args]
   (foo "clojure"))
