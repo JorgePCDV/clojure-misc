@@ -190,5 +190,15 @@
              [["Bad code:" bad]
               ["Good code:" good]])))
 
+(defmacro mischief-macro
+  [& stuff-to-do]
+  (let [macro-message (gensym 'message)]
+    `(let [~macro-message "Mischievous"]
+       ~@stuff-to-do
+       (println "Mischievous macro is: " ~macro-message))))
+(def message "Not mischievous")
+(mischief-macro
+  (println "Calling from mischief macro: " message))
+
 (defn -main [& args]
   (foo "clojure"))
