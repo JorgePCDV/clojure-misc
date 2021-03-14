@@ -200,5 +200,14 @@
 (mischief-macro
   (println "Calling from mischief macro: " message))
 
+; avoid double evaluation
+(defmacro report
+  [to-try]
+  `(let [result# ~to-try]
+     (if result#
+       (println (quote ~to-try) "was successful:" result#)
+       (println (quote ~to-try) "was not succesful:" result#))))
+(report (do (Thread/sleep 1000) (+ 1 1)))
+
 (defn -main [& args]
   (foo "clojure"))
