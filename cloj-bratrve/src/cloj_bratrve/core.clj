@@ -206,8 +206,15 @@
   `(let [result# ~to-try]
      (if result#
        (println (quote ~to-try) "was successful:" result#)
-       (println (quote ~to-try) "was not succesful:" result#))))
+       (println (quote ~to-try) "was not successful:" result#))))
 (report (do (Thread/sleep 1000) (+ 1 1)))
+
+; macro composition (careful with this approach)
+(defmacro doseq-macro
+  [macroname & args]
+  `(do
+     ~@(map (fn [arg] (list macroname arg)) args)))
+(doseq-macro report (= 1 1) (= 1 2))
 
 (defn -main [& args]
   (foo "clojure"))
