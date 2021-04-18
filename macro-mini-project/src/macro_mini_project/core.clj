@@ -33,6 +33,13 @@
           {}
           validations))
 
+(defmacro if-valid
+  "Handle validation more concisely"
+  [to-validate validations errors-name & then-else]
+  `(let [~errors-name (validate ~to-validate ~validations)]
+     (if (empty? ~errors-name)
+       ~@then-else)))
+
 (defn -main
   [& args]
   (validate order-details order-details-validations))
