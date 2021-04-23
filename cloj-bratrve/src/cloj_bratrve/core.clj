@@ -216,5 +216,15 @@
      ~@(map (fn [arg] (list macroname arg)) args)))
 (doseq-macro report (= 1 1) (= 1 2))
 
+;; futures
+(let [result (future (Thread/sleep 3000)
+                     (+ 1 1))]
+  (println "Dereferenced result is: " @result)
+  (println "It will be at least 3 seconds before printing this"))
+
+(let [f (future)]
+  @f
+  (realized? f))
+
 (defn -main [& args]
   (foo "clojure"))
