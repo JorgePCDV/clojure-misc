@@ -226,5 +226,27 @@
   @f
   (realized? f))
 
+;; delays
+(def delay-example
+  (delay (let [message "This is a delay example"]
+           (println "First deref:" message)
+           message)))
+(force delay-example)
+@delay-example
+
+;; delay use case
+(def uploads ["one.jpg" "two.jpg" "three.jpg"])
+(defn email-user
+  [email-address]
+  (println "Sending notification to" email-address))
+(defn upload-document
+  "Needs to be implemented"
+  [document]
+  true)
+(let [notify (delay (email-user "example_user@gmail.com"))]
+  (doseq [document uploads]
+    (future (upload-document document)
+            (force notify))))
+
 (defn -main [& args]
   (foo "clojure"))
