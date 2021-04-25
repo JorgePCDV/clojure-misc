@@ -248,5 +248,10 @@
     (future (upload-document document)
             (force notify))))
 
+;; promises
+(def my-promise (promise))
+(deliver my-promise (+ 1 2))
+@my-promise
+
 (defn -main [& args]
   (foo "clojure"))
