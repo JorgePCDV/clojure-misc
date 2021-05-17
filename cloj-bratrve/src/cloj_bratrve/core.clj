@@ -253,5 +253,38 @@
 (deliver my-promise (+ 1 2))
 @my-promise
 
+;; other promise example
+(def product-one
+  {:store "Store One"
+   :price 90
+   :quality 90})
+(def product-two
+  {:store "Store Two"
+   :price 150
+   :quality 83})
+(def product-three
+  {:store "Store Three"
+   :price 94
+   :quality 99})
+(defn mock-api-call
+  [result]
+  (Thread/sleep 1000)
+  result)
+(defn satisfactory?
+  "If product meets criteria, return product,  else return false"
+  [product]
+  (and (<= (:price product) 100)
+       (>= (:quality product) 97)
+       product))
+(time (some (comp satisfactory? mock-api-call)
+            [product-one product-two product-three]))
+(time
+  (let [product-promise (promise)]
+    (doseq [product [product-one product-two product-three]]
+      (future (if-let [satisfactory-product (satisfactory? (mock-api-call product))]
+                (deliver product-promise satisfactory-product))))
+    (println "Product chosen is: " @product-promise)))
+
+
 (defn -main [& args]
   (foo "clojure"))
