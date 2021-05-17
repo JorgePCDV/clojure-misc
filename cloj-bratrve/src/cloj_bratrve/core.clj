@@ -285,6 +285,16 @@
                 (deliver product-promise satisfactory-product))))
     (println "Product chosen is: " @product-promise)))
 
+;; promise timeout
+(let [p (promise)]
+  (deref p 100 "timed out"))
+
+;; callbacks in clojure
+(let [callback-promise (promise)]
+  (future (println "Here's callback promise: " @callback-promise))
+  (Thread/sleep 100)
+  (deliver callback-promise "Callback!"))
+
 
 (defn -main [& args]
   (foo "clojure"))
