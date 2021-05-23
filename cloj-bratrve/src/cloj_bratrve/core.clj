@@ -295,6 +295,24 @@
   (Thread/sleep 100)
   (deliver callback-promise "Callback!"))
 
+;; rolling out own queue
+(defmacro wait
+  "Sleep `timeout` seconds before evaluating body"
+  [timeout & body]
+  `(do (Thread/sleep ~timeout) ~@body))
+(defmacro enqueue
+  ([q concurrent-promise-name concurrent serialized]
+   `(let [~concurrent-promise-name (promise)]
+      (future (deliver ~concurrent-promise-name ~concurrent))
+      (deref ~q)
+      ~serialized
+      ~concurrent-promise-name))
+  ([concurrent-promise-name concurrent serialized]
+   `(enqueue (future) ~concurrent-promise-name ~concurrent ~serialized)))
+(-> (enqueue item (wait 200 "Queueing item 1") (println @item))
+    (enqueue item (wait 400 "Queueing item 2") (println @item))
+    (enqueue item (wait 100 "Queueing item 3") (println @item)))
+
 
 (defn -main [& args]
   (foo "clojure"))
