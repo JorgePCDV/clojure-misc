@@ -320,6 +320,12 @@
   (if (>= (:attribute-two my-atom-state) 50)
     (future (println (:attribute-one my-atom-state)))))
 
+;; atom swap! (increase values of my-atom)
+(swap! my-atom (fn [current-state]
+                 (merge-with + current-state {:attribute-one 1
+                                              :attribute-two 5})))
+
+
 
 (defn -main [& args]
   (foo "clojure"))
