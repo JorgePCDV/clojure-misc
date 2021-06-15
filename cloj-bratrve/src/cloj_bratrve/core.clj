@@ -313,6 +313,13 @@
     (enqueue item (wait 400 "Queueing item 2") (println @item))
     (enqueue item (wait 100 "Queueing item 3") (println @item)))
 
+;; atoms
+(def my-atom (atom {:attribute-one 10
+                    :attribute-two 60}))
+(let [my-atom-state @my-atom]
+  (if (>= (:attribute-two my-atom-state) 50)
+    (future (println (:attribute-one my-atom-state)))))
+
 
 (defn -main [& args]
   (foo "clojure"))
