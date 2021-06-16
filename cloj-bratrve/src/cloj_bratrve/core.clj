@@ -328,6 +328,15 @@
   [atom-state increase-by]
   (merge-with + atom-state {:attribute-one increase-by}))
 (swap! my-atom increase-my-atom-level 10)
+;; same as above
+(swap! my-atom update-in [:attribute-one] + 10)
+
+;; retrieving past atom states
+(let [num (atom 1)
+      s1 @num]
+  (swap! num inc)
+  (println "State 1:" s1)
+  (println "Current state:" @num))
 
 
 
