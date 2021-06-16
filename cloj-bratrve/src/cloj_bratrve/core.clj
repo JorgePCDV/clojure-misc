@@ -338,6 +338,10 @@
   (println "State 1:" s1)
   (println "Current state:" @num))
 
+;; reset atom
+(reset! my-atom {:attribute-one 0
+                 :attribute-two 0})
+
 
 
 (defn -main [& args]
