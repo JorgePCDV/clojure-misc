@@ -324,6 +324,10 @@
 (swap! my-atom (fn [current-state]
                  (merge-with + current-state {:attribute-one 1
                                               :attribute-two 5})))
+(defn increase-my-atom-level
+  [atom-state increase-by]
+  (merge-with + atom-state {:attribute-one increase-by}))
+(swap! my-atom increase-my-atom-level 10)
 
 
 
