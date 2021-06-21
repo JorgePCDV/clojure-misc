@@ -342,7 +342,29 @@
 (reset! my-atom {:attribute-one 0
                  :attribute-two 0})
 
-
+;; watches
+(defn calculate-attribute
+  [an-atom]
+  (* (:attribute-one an-atom)
+     (- 100 (:attribute-two an-atom))))
+(defn atom-alert
+  [key watched old-state new-state]
+  (let [watched-attribute (calculate-attribute new-state)]
+    (if (> watched-attribute 5000)
+      (do
+        (println "Alert!")
+        (println "Watched attribute above: " watched-attribute)
+        (println "Message published by: " key))
+      (do
+        (println "All good with key: " key)
+        (println "Attribute one: " (:attribute-one new-state))
+        (println "Attribute two: " (:attribute-two new-state))
+        (println "Watched attribute: " watched-attribute)))))
+(reset! my-atom {:attribute-one 22
+                 :attribute-two 2})
+(add-watch my-atom :my-alert atom-alert)
+(swap! my-atom update-in [:attribute-two] + 1)
+(swap! my-atom update-in [:attribute-one] + 30)
 
 (defn -main [& args]
   (foo "clojure"))
