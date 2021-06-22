@@ -187,8 +187,8 @@
 (defmacro code-critic
   [bad good]
   `(do ~@(map #(apply criticize-code %)
-             [["Bad code:" bad]
-              ["Good code:" good]])))
+              [["Bad code:" bad]
+               ["Good code:" good]])))
 
 (defmacro mischief-macro
   [& stuff-to-do]
@@ -255,16 +255,16 @@
 
 ;; other promise example
 (def product-one
-  {:store "Store One"
-   :price 90
+  {:store   "Store One"
+   :price   90
    :quality 90})
 (def product-two
-  {:store "Store Two"
-   :price 150
+  {:store   "Store Two"
+   :price   150
    :quality 83})
 (def product-three
-  {:store "Store Three"
-   :price 94
+  {:store   "Store Three"
+   :price   94
    :quality 99})
 (defn mock-api-call
   [result]
@@ -365,6 +365,17 @@
 (add-watch my-atom :my-alert atom-alert)
 (swap! my-atom update-in [:attribute-two] + 1)
 (swap! my-atom update-in [:attribute-one] + 30)
+
+;; validators
+(defn attribute-two-validator
+  [{:keys [attribute-two]}]
+  (or (and (>= attribute-two 0)
+           (<= attribute-two 100))
+      (throw (IllegalStateException. "attribute-two cannot exceed 100"))))
+(def validated-atom
+  (atom {:attribute-one 0 :attribute-two 0}
+        :validator attribute-two-validator))
+(swap! validated-atom update-in [:attribute-two] + 50)
 
 (defn -main [& args]
   (foo "clojure"))
