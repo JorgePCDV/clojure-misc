@@ -377,5 +377,21 @@
         :validator attribute-two-validator))
 (swap! validated-atom update-in [:attribute-two] + 50)
 
+;; references
+(def varieties
+  #{"one" "two" "three" "four" "five"})
+(defn variety-count
+  [variety count]
+  {:variety variety
+   :count count})
+(defn generate-variety-state
+  [name]
+  {:name name
+   :varieties #{}})
+
+(def first-variety (ref (generate-variety-state "First variety")))
+(def variety-holder (ref {:name "Holder"
+                          :varieties (set (map #(variety-count % 2) varieties))}))
+
 (defn -main [& args]
   (foo "clojure"))
