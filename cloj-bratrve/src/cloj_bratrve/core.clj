@@ -393,5 +393,17 @@
 (def variety-holder (ref {:name "Holder"
                           :varieties (set (map #(variety-count % 2) varieties))}))
 
+(defn reassign-varieties
+  [first-variety holder]
+  (dosync
+    (when-let [pair (some #(if (= (:count %) 2) %) (:varieties @holder))]
+      (let [updated-count (variety-count (:variety pair) 1)]
+        (alter first-variety update-in [:varieties] conj updated-count)
+        (alter holder update [:varieties] disj pair)
+        (alter holder update-in [:varieties] conj updated-count)))))
+(reassign-varieties first-variety variety-holder)
+
+
+
 (defn -main [& args]
   (foo "clojure"))
