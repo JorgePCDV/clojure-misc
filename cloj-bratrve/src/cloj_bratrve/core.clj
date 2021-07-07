@@ -402,7 +402,7 @@
         (alter holder update [:varieties] disj pair)
         (alter holder update-in [:varieties] conj updated-count)))))
 (reassign-varieties first-variety variety-holder)
-(:varietes @first-variety)
+(:varieties @first-variety)
 (defn similar-varieties
   [target-variety variety-set]
   (filter #(= (:variety %) (:variety target-variety)) variety-set))
