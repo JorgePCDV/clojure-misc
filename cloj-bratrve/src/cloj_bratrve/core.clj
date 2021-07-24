@@ -440,7 +440,13 @@
 (binding [*notification-address* "other-address@adress.org"]
   (notify "other notification"))
 
+;; dynamic binding built in vars
+(binding [*out* (clojure.java.io/writer "print-output")]
+  (println "Dynamic binding for output to writer"))
+(slurp "print-output")
 
+(binding [*print-length* 1]
+  (println ["Print" "just" "one"]))
 
 
   (defn -main [& args]
