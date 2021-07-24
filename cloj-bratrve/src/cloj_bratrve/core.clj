@@ -431,6 +431,17 @@
   (println *notification-address*))
 (println *notification-address*)
 
+;; dynamic var use case
+(defn notify
+  [message]
+  (str "TO:" *notification-address* "\n"
+       "MESSAGE: "message))
+(notify "Some notification.")
+(binding [*notification-address* "other-address@adress.org"]
+  (notify "other notification"))
+
+
+
 
   (defn -main [& args]
     (foo "clojure"))
