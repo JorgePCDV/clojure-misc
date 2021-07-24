@@ -383,14 +383,14 @@
 (defn variety-count
   [variety count]
   {:variety variety
-   :count count})
+   :count   count})
 (defn generate-variety-state
   [name]
-  {:name name
+  {:name      name
    :varieties #{}})
 
 (def first-variety (ref (generate-variety-state "First variety")))
-(def variety-holder (ref {:name "Holder"
+(def variety-holder (ref {:name      "Holder"
                           :varieties (set (map #(variety-count % 2) varieties))}))
 
 (defn reassign-varieties
@@ -420,7 +420,17 @@
 (future (dosync (commute counter (sleep-print-update 100 "Thread A" inc))))
 (future (dosync (commute counter (sleep-print-update 100 "Thread B" inc))))
 
+;; dynamic binding
+(def ^:dynamic *notification-address* "some-address@address.com")
+(binding [*notification-address* "some-other-address@secondadress.com"]
+  *notification-address*)
+(binding [*notification-address* "some-other-address@secondadress.com"]
+  (println *notification-address*)
+  (binding [*notification-address* "yet-another-address@secondadress.com"]
+    (println *notification-address*))
+  (println *notification-address*))
+(println *notification-address*)
 
 
-(defn -main [& args]
-  (foo "clojure"))
+  (defn -main [& args]
+    (foo "clojure"))
