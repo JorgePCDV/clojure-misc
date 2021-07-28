@@ -448,6 +448,10 @@
 (binding [*print-length* 1]
   (println ["Print" "just" "one"]))
 
+;; altering var root
+(def var-root "some var root")
+(alter-var-root #'var-root (fn [_] "altered var root"))
+
 
   (defn -main [& args]
     (foo "clojure"))
