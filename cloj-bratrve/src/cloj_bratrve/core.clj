@@ -452,6 +452,11 @@
 (def var-root "some var root")
 (alter-var-root #'var-root (fn [_] "altered var root"))
 
+;; with-redefs example
+(with-redefs [*out* *out*]
+  (doto (Thread. #(println "redefs allow to show this in REPL"))
+    .start
+    .join))
 
   (defn -main [& args]
     (foo "clojure"))
