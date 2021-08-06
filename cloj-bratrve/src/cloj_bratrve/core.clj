@@ -468,7 +468,24 @@
 (defn random-string-list
   [list-length string-length]
   (doall (take list-length (repeatedly (partial random-string string-length)))))
-(def names (random-string-list 3000 7000))
+
+(def names (random-string-list 500 50))
+
+;; pmap with partion groups
+(def numbers [1 2 3 4 5 6 7 8 9 10])
+(apply concat (pmap (fn [number-group] (doall (map inc number-group)))
+                    (partition-all 3 numbers)))
+
+(defn ppmap
+  "Partioned pmap, for grouping map ops together to make parallel overhead worthwile"
+  [grain-size f & colls]
+  (apply concat
+         (apply pmap
+                (fn [& pgroups] (doall (apply map f pgroups)))
+                (map (partial partition-all grain-size) colls))))
+
+
+(time (dorun (ppmap 20 clojure.string/lower-case names)))
 
   (defn -main [& args]
     (foo "clojure"))
