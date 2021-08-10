@@ -7,3 +7,6 @@
 (def echo-chan (chan))
 (go (println (<! echo-chan)))
 (>!! echo-chan "check check")
+
+;; this won't work because there's no process listening for this channel.
+;; (>!! (chan) "checking")
