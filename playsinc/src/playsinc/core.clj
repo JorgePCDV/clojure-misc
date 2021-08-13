@@ -15,3 +15,7 @@
 (def echo-buffer (chan 2))
 (>!! echo-buffer "checking")
 (>!! echo-buffer "checking again")
+
+(def hi-chan (chan))
+(doseq [n (range 100)]
+  (go (>! hi-chan (str "hi " n))))
