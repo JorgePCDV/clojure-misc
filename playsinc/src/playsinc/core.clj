@@ -19,3 +19,7 @@
 (def hi-chan (chan))
 (doseq [n (range 100)]
   (go (>! hi-chan (str "hi " n))))
+
+;; thread (blocking instead of parking)
+(thread (println (<!! echo-chan)))
+(>!! echo-chan "thread checking")
