@@ -32,7 +32,34 @@
     (go (<! in)
         (>! out "product"))
     [in out]))
-
 (let [[in out] (vending-machine)]
   (>!! in "pocket lint")
+  (<!! out))
+;; better version
+(defn vending-machine-v2
+  [product-count]
+  (let [in (chan)
+        out (chan)]
+    (go (loop [hc product-count]
+          (if (> hc 0)
+            (let [input (<! in)]
+              (if (= 3 input)
+                (do (>! out "product")
+                    (recur (dec hc)))
+                (do (>! out "wrong product")
+                    (recur hc))))
+            (do (close! in)
+                (close! out)))))
+    [in out]))
+(let [[in out] (vending-machine-v2 2)]
+  (>!! in "pocket lint")
+  (println (<!! out))
+
+  (>!! in 3)
+  (println (<!! out))
+
+  (>!! in 3)
+  (println (<!! out))
+
+  (>!! in 3)
   (<!! out))
