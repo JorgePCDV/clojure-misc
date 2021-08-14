@@ -23,3 +23,16 @@
 ;; thread (blocking instead of parking)
 (thread (println (<!! echo-chan)))
 (>!! echo-chan "thread checking")
+
+;; vending machine example project
+(defn vending-machine
+  []
+  (let [in (chan)
+        out (chan)]
+    (go (<! in)
+        (>! out "product"))
+    [in out]))
+
+(let [[in out] (vending-machine)]
+  (>!! in "pocket lint")
+  (<!! out))
