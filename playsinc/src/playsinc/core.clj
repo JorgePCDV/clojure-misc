@@ -72,3 +72,18 @@
   (go (>! c3 (clojure.string/reverse (<! c2))))
   (go (println (<! c3)))
   (>!! c1 "hello"))
+
+;; alts!!
+(defn upload
+  [screenshot c]
+  (go (Thread/sleep (rand 100))
+      (>! c screenshot)))
+
+(let [c1 (chan)
+      c2 (chan)
+      c3 (chan)]
+  (upload "screenshot1.jpg" c1)
+  (upload "screenshot2.jpg" c2)
+  (upload "screenshot3.jpg" c3)
+    (let [[screenshot channel] (alts!! [c1 c2 c3])]
+      (println "Sending screenshot notification for" screenshot)))
