@@ -95,3 +95,11 @@
     (if screenshot
       (println "sending screenshot notification for" screenshot)
       (println "timed out!"))))
+
+;; alts!! with put operations
+(let [c5 (chan)
+      c6 (chan)]
+  (go (<! c6))
+    (let [[value channel] (alts!! [c5 [c6 "put operation!"]])]
+      (println value)
+      (= channel c6)))
