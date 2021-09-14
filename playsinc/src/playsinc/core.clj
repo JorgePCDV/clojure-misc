@@ -87,3 +87,11 @@
   (upload "screenshot3.jpg" c3)
     (let [[screenshot channel] (alts!! [c1 c2 c3])]
       (println "Sending screenshot notification for" screenshot)))
+
+;; alts!! timeouts
+(let [c4 (chan)]
+  (upload "screenshot_timeout.jpg" c4)
+  (let [[screenshot channel] (alts!! [c4 (timeout 5)])]
+    (if screenshot
+      (println "sending screenshot notification for" screenshot)
+      (println "timed out!"))))
